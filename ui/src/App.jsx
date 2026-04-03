@@ -16,13 +16,13 @@ function AppContent() {
     };
 
     window.addEventListener('popstate', handlePopState);
-    
+
     // Also listen for custom navigation events
     const handleNavigate = () => {
       setCurrentPath(window.location.pathname);
     };
     window.addEventListener('popstate', handleNavigate);
-    
+
     return () => {
       window.removeEventListener('popstate', handlePopState);
       window.removeEventListener('popstate', handleNavigate);

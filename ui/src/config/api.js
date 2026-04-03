@@ -9,6 +9,14 @@ const getApiOrigin = () => {
     }
     return base;
   }
+
+  // For production (Vercel):
+  // When not on localhost, use an empty origin to enable relative paths.
+  // This allows the vercel.json proxy to forward requests to the Azure VM.
+  if (typeof window !== 'undefined' && window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    return '';
+  }
+
   const protocol = window.location.protocol;
   const hostname = window.location.hostname;
   return `${protocol}//${hostname}:8080`;
