@@ -320,7 +320,13 @@ async fn main() -> std::io::Result<()> {
     let store = Arc::new(VectorStore::new("zerch_data.bin"));
     let client = Client::new();
 
-    log::info!("Starting Zerch API server on http://127.0.0.1:8080");
+    let host = std::env::var("ZERCH_API_HOST").unwrap_or_else(|_| "127.0.0.1".to_string());
+    let port: u16 = std::env::var("ZERCH_API_PORT")
+        .ok()
+        .and_then(|p| p.parse().ok())
+        .unwrap_or(8080);
+    let bind_addr = format!("{}:{}", host, port);
+    log::info!("Starting Zerch API server on http://{}", bind_addr);
 
     HttpServer::new(move || {
         let cors = Cors::default()
@@ -339,7 +345,7 @@ async fn main() -> std::io::Result<()> {
             .service(search)
             .service(summarize::summarize)
     })
-    .bind("127.0.0.1:8080")?
+    .bind(&bind_addr)?
     .run()
     .await
 }
