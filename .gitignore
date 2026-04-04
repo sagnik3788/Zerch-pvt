@@ -5,4 +5,3 @@ test.log
 zerch_data.bin
 *.log
 .env
-/log-server
