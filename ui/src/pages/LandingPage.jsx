@@ -16,8 +16,8 @@ function LandingPage() {
     <div className="landing-container">
       {/* Navigation */}
       <nav className="landing-nav">
-        <button 
-          className="nav-brand" 
+        <button
+          className="nav-brand"
           onClick={() => navigate('/')}
           style={{ background: 'none', border: 'none', cursor: 'pointer' }}
         >
@@ -28,7 +28,7 @@ function LandingPage() {
           <a href="#features" className="nav-link">Features</a>
           <a href="#about" className="nav-link">About</a>
           <a href="#tech" className="nav-link">Technology</a>
-          <button 
+          <button
             onClick={() => navigate('/live-logs')}
             className="nav-link nav-button"
           >
@@ -128,7 +128,7 @@ function LandingPage() {
 
       {/* Footer */}
       <footer className="landing-footer">
-        <p>&copy; 2024 Zerch - Vector Search Engine in Rust</p>
+        <p>&copy; 2026 Zerch - Vector Search Engine in Rust</p>
         <div className="footer-links">
           <a href="#privacy">Privacy</a>
           <a href="#terms">Terms</a>

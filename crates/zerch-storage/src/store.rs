@@ -13,6 +13,16 @@ impl VectorStore {
         Self { path: path.into() }
     }
 
+    /// Clears all stored vectors by truncating the bin file to zero bytes.
+    pub fn clear(&self) -> Result<()> {
+        OpenOptions::new()
+            .create(true)
+            .write(true)
+            .truncate(true)
+            .open(&self.path)?;
+        Ok(())
+    }
+
     // dump the vector into the bin , &[f32] for no copy of vector, along with the text
     pub fn append_vector(&self, vector: &[f32], text: &str) -> Result<()> {
         let mut file = OpenOptions::new()

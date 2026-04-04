@@ -165,6 +165,15 @@ async fn upload_logs(
     let mut logs = Vec::new();
     let mut total_indexed = 0u32;
 
+    // Clear the previous vectors so only the new log file's embeddings are stored
+    if let Err(e) = store.clear() {
+        log::error!("Failed to clear vector store: {}", e);
+        return Ok(HttpResponse::InternalServerError().json(serde_json::json!({
+            "success": false,
+            "message": format!("Failed to clear vector store: {}", e)
+        })));
+    }
+
     while let Some(item) = payload.next().await {
         let mut field = item?;
         let field_name = field.name().to_string();
