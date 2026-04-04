@@ -7,6 +7,7 @@ use std::path::PathBuf;
 use tokio::sync::Mutex;
 use zerch_core::cosine_similarity;
 use zerch_embed::LocalEmbedder;
+use zerch_storage::VectorStore;
 
 /// Shared application state for MCP tools.
 pub struct AppState {
@@ -63,6 +64,11 @@ pub async fn embed_text(state: &AppState, args: EmbedArgs) -> Result<EmbedResult
     let vector = embedder
         .embed(text)
         .context("failed to generate embedding vector")?;
+
+    let store = VectorStore::new(&state.store_path);
+    store
+        .append_vector(&vector, text)
+        .context("failed to store embedded text in vector store")?;
 
     Ok(EmbedResult {
         dimension: vector.len(),
